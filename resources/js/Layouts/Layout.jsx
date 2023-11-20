@@ -11,7 +11,7 @@ const Layout = ({children}) => {
             alignItems: "flex-start",
             background:"url(/images/background.jpg)",
             backgroundSize:"100% 100dvh",
-            paddingTop:"clamp(55px,20%,200px)",
+            paddingTop:"clamp(80px,10%,200px)",
             height:"100dvh",
             width:"100dvw",
             overflowY:"auto"
