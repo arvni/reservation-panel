@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\FirstPageController;
+use App\Http\Controllers\ResendSmsController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\VerificationPageController;
+use App\Http\Controllers\VerifyMobileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,23 +18,11 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
+Route::get('/', FirstPageController::class);
+Route::post("reserve", ReservationController::class)->name("reserve");
+Route::get("verify/{reservation}", VerificationPageController::class)->name("verify");
+Route::post("verify/{reservation}", VerifyMobileController::class);
+Route::post("resend-sms/{reservation}", ResendSmsController::class)->name("resend-sms");
+Route::get("success",function (){
+    return \Inertia\Inertia::render("Success");
+})->name("success");
