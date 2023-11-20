@@ -28,21 +28,21 @@ class DatabaseSeeder extends Seeder
         ]
         ];
         $times = [
-            ["started_at" => "10:00", "ended_at" => "0:30", "disabled" => false],
+            ["started_at" => "10:00", "ended_at" => "10:30", "disabled" => false],
             ["started_at" => "10:30", "ended_at" => "11:00", "disabled" => false],
-            ["started_at" => "11:00", "ended_at" => "1:30", "disabled" => false],
+            ["started_at" => "11:00", "ended_at" => "11:30", "disabled" => false],
             ["started_at" => "11:30", "ended_at" => "12:00", "disabled" => false],
-            ["started_at" => "12:00", "ended_at" => "2:30", "disabled" => false],
+            ["started_at" => "12:00", "ended_at" => "12:30", "disabled" => false],
             ["started_at" => "12:30", "ended_at" => "13:00", "disabled" => false],
-            ["started_at" => "13:00", "ended_at" => "3:30", "disabled" => false],
+            ["started_at" => "13:00", "ended_at" => "13:30", "disabled" => false],
             ["started_at" => "13:30", "ended_at" => "14:00", "disabled" => false],
-            ["started_at" => "14:00", "ended_at" => "4:30", "disabled" => false],
+            ["started_at" => "14:00", "ended_at" => "14:30", "disabled" => false],
             ["started_at" => "14:30", "ended_at" => "15:00", "disabled" => false],
-            ["started_at" => "15:00", "ended_at" => "5:30", "disabled" => true],
+            ["started_at" => "15:00", "ended_at" => "15:30", "disabled" => true],
             ["started_at" => "15:30", "ended_at" => "16:00", "disabled" => false],
-            ["started_at" => "16:00", "ended_at" => "6:30", "disabled" => false],
+            ["started_at" => "16:00", "ended_at" => "16:30", "disabled" => false],
             ["started_at" => "16:30", "ended_at" => "17:00", "disabled" => false],
-            ["started_at" => "17:00", "ended_at" => "7:30", "disabled" => false],
+            ["started_at" => "17:00", "ended_at" => "17:30", "disabled" => false],
             ["started_at" => "17:30", "ended_at" => "18:00", "disabled" => false],
         ];
         foreach ($doctors as $doctor){
