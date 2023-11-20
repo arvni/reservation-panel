@@ -3,6 +3,7 @@
 use App\Http\Controllers\FirstPageController;
 use App\Http\Controllers\ResendSmsController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\SuccessPageController;
 use App\Http\Controllers\VerificationPageController;
 use App\Http\Controllers\VerifyMobileController;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', FirstPageController::class);
 Route::post("reserve", ReservationController::class)->name("reserve");
 Route::get("verify/{reservation}", VerificationPageController::class)->name("verify");
-Route::post("verify/{reservation}", VerifyMobileController::class);
-Route::post("resend-sms/{reservation}", ResendSmsController::class)->name("resend-sms");
-Route::get("success",function (){
-    return \Inertia\Inertia::render("Success");
-})->name("success");
+Route::post("verify/{reservation}", VerifyMobileController::class)->middleware("throttle:10,6");
+Route::post("resend-sms/{reservation}", ResendSmsController::class)->middleware("throttle:3,10")->name("resend-sms");
+Route::get("success/{reservation}", SuccessPageController::class)->name("success");

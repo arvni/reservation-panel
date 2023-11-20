@@ -1,19 +1,10 @@
-import {Head} from "@inertiajs/react";
-import {Container, CssBaseline, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
+import Layout from "@/Layouts/Layout.jsx";
 
-const Success = () => {
-  return <>
-      <Head title="Welcome"/>
-      <Container component="main" maxWidth="xs" sx={{
-          minHeight: "100dvh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-      }}>
-          <Typography>You have successfully Verified</Typography>
-          <CssBaseline/>
-      </Container>
-      </>;
+const Success = ({message}) => {
+  return <Box sx={{mt: 3,mx:2,p:4, background:"rgba(255,255,255,0.7)",borderRadius:4 }}>
+          <Typography>{message}</Typography>
+      </Box>;
 }
-
+Success.layout=(page)=><Layout children={page}/>
 export default Success;

@@ -13,17 +13,17 @@ class VerifyMobileController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Reservation $reservation,Request $request)
+    public function __invoke(Reservation $reservation, Request $request)
     {
-       if ($this->checkOtp($reservation->mobile,$request->get("code"))){
-           $reservation->update(["verified"=>true,"verified_at"=>Carbon::now()]);
-           $reservation->Time->update(["disabled"=>true]);
-           return redirect()->route("success");
-       }
-       return back()->withErrors(["mobile"=>"the code you have entered does not correct"]);
+        if ($this->checkOtp($reservation->mobile, $request->get("code"))) {
+            $reservation->update(["verified" => true, "verified_at" => Carbon::now()]);
+            $reservation->Time->update(["disabled" => true]);
+            return redirect()->route("success", $reservation);
+        }
+        return back()->withErrors(["mobile" => "the code you have entered does not correct"]);
     }
 
-    private function checkOtp($mobile,$code)
+    private function checkOtp($mobile, $code)
     {
         try {
             $sid = config("services.twilio.sid");
@@ -33,7 +33,7 @@ class VerifyMobileController extends Controller
             $result = $twilio->verify->v2->services($serviceSid)
                 ->verificationChecks
                 ->create([
-                        "to" => $mobile,
+                        "to" => "+968".$mobile,
                         "code" => $code
                     ]
                 );

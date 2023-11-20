@@ -24,10 +24,11 @@ class ReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "doctor.id" => ["required", "exists:doctors,id"],
-            "firstName" => ["required"],
-            "lastName" => ["required"],
-            "mobile" => ["required"],
+            "name" => ["required"],
+            "mobile" => ["required",function (string $attribute, mixed $value, $fail): void {
+                if (!preg_match("/^((\+|00)?968)?[279]\d{7}$/", $value))
+                    $fail(trans("Please enter a valid mobile number"));
+            }],
             "time" => ["required",new CheckTimeRule()]
         ];
     }

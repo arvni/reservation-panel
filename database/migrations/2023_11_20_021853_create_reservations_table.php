@@ -16,8 +16,7 @@ return new class extends Migration {
             $table->uuid("id")->primary()->index()->unique();
             $table->foreignIdFor(Doctor::class)->constrained();
             $table->foreignIdFor(Time::class)->nullable()->constrained();
-            $table->string("firstName");
-            $table->string("lastName");
+            $table->string("name");
             $table->string("mobile")->unique();
             $table->string("email")->nullable();
             $table->boolean("verified")->default(false);

@@ -15,7 +15,7 @@ class VerificationPageController extends Controller
     public function __invoke(Reservation $reservation)
     {
         if ($reservation->verified)
-            return redirect()->route("success");
+            return redirect()->route("success",$reservation);
         if ($reservation->VerificationRequests()->count()>3)
             abort(401,"You Have Request Many Verification Sms");
         $latestVerificationRequest=$reservation->VerificationRequests()->latest()->first();

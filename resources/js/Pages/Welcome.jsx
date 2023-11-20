@@ -1,35 +1,30 @@
-import {useState} from "react";
-import {Head, useForm} from '@inertiajs/react';
+import {useForm} from '@inertiajs/react';
 import {
+    Backdrop,
     Box,
     Button,
     Card,
     CardActions,
-    CardContent,
-    Container,
-    CssBaseline,
+    CardContent, CircularProgress,
     Grid,
-    IconButton,
     Slide,
-    Stack,
     TextField,
     ToggleButton,
     ToggleButtonGroup,
     Typography
 } from "@mui/material";
-import {CountdownCircleTimer} from 'react-countdown-circle-timer'
-import CodeField from "@/Components/CodeField.jsx";
+import Layout from "@/Layouts/Layout.jsx";
 
 const TimeCard = ({doctor, data, onSelect}) => {
     const handleChange = (_, v) => onSelect(v);
-    return <Grid item xs={12}>
+    return <Grid item xs={6} sx={{paddingTop:"0px !important"}}>
         <Card
             sx={{
-                borderTopRightRadius: "50dvw",
-                borderTopLeftRadius: "50dvw",
-                borderBottomLeftRadius: "2em",
-                borderBottomRightRadius: "2em",
-                background: "rgba(0,0,0,0.11)"
+                borderTopRightRadius: "25dvw",
+                borderTopLeftRadius: "25dvw",
+                borderBottomLeftRadius: "1.5em",
+                borderBottomRightRadius: "1.5em",
+                background: "rgba(255,255,255,0.35)"
             }}
         >
             <CardContent
@@ -45,29 +40,39 @@ const TimeCard = ({doctor, data, onSelect}) => {
                     style={{
                         borderRadius: "50%",
                         marginBottom: "1em",
-                        width: "clamp(300px,100%,396px)",
+                        width: "100%",
                         height: "auto",
                     }}/>}
                 <Typography>{doctor?.title}</Typography>
                 <Typography>{doctor?.subtitle}</Typography>
                 <Typography>{doctor?.specialty}</Typography>
             </CardContent>
-            <CardActions>
+            <CardActions sx={{px:"1px"}}>
                 <ToggleButtonGroup
                     value={data?.time}
                     exclusive
                     sx={{
+                        display:"flex",
                         flexWrap: "wrap",
-                        justifyContent: "space-around",
+                        justifyContent: "space-evenly",
                         alignContent: "space-between",
                         alignItems: "stretch",
-                        gap: "1em"
+                        gap: ".5em",
                     }}
                     onChange={handleChange}
                     aria-label="time"
                 >
-                    {doctor?.times.map(time => <ToggleButton disabled={time.disabled} key={time.id}
-                                                             sx={{borderRadius: "2em !important"}}
+                    {doctor?.times.map(time => <ToggleButton disabled={time.disabled}
+                                                             key={time.id}
+                                                             sx={{
+                                                                 borderRadius: "1em !important",
+                                                                 px:.5,
+                                                                 py:0,
+                                                                 fontWeight: "900",
+                                                                 background: "#fff",
+                                                                 fontSize: "clamp(.7em,.75em,.9em)",
+                                                                 color:"#000"
+                                                            }}
                                                              value={time.id}
                                                              aria-label={time.title}>
                         {time.title}
@@ -78,80 +83,44 @@ const TimeCard = ({doctor, data, onSelect}) => {
     </Grid>;
 }
 
-export default function Welcome({doctors}) {
-    const [showResend, setShowResend] = useState(false)
-    const {data, setData, post, processing, errors} = useForm({
+ function Welcome({doctors}) {
+    const {data, setData, post, processing, errors,setError,clearErrors} = useForm({
         step: 1,
-        doctor: null,
-        firstName: "",
-        lastName: "",
+        name: "",
         mobile: "",
         email: "",
         time: null
     });
-    const handleShowResend = () => {
-        setShowResend(true)
-    }
-    const handleResendCode = () => {
-
-    };
     const handleSubmit = e => {
         e.preventDefault();
+        clearErrors();
+        if (/^((\+|00)?968)?[279]\d{7}$/.test(data.mobile))
         post(route("reserve"), {
-            onSuccess: (e) => {
-                console.log(e);
+            onSuccess: () => {
                 setData(previousData => ({...previousData, step: previousData.step + 1}))
             }
         });
+        else
+            setError("mobile","Please enter a valid mobile number")
     }
     const handleSelectTime = (id) => setData((previousData) => ({
         ...previousData,
         time: id,
         step: previousData.step + 1
     }));
-    const handleDoctorChange = (id) => () => {
-        setData(previousData => ({
-            ...previousData,
-            doctor: doctors?.data[doctors?.data?.findIndex((item) => item.id === id)],
-            step: data.step + 1
-        }));
-    }
     const handleChange = (e) => {
         setData(previousData => ({...previousData,[e.target.name]:e.target.value}));
     }
-    return (
-        <>
-            <Head title="Welcome"/>
-            <Container component="main" maxWidth="xs" sx={{
-                minHeight: "100dvh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-            }}>
-                <CssBaseline/>
+    return (<>
                 <Slide in={data.step === 1} mountOnEnter unmountOnExit direction={"left"}>
                     <Box>
-                        <Grid container spacing={2}>
-                            {doctors.data.map(doctor => <Grid item xs={6} key={"doctor-" + doctor.id}>
-                                <IconButton onClick={handleDoctorChange(doctor.id)} sx={{flexDirection: "column"}}>
-                                    <img src={doctor.image}
-                                         style={{maxWidth: "100%", borderRadius: "50%", marginBottom: "1em"}}/>
-                                    <Typography>{doctor?.title}</Typography>
-                                    <Typography>{doctor?.subtitle}</Typography>
-                                    <Typography>{doctor?.specialty}</Typography>
-                                </IconButton>
-                            </Grid>)}
+                        <Grid container sx={{gap:"clamp(0px,4px,8px)",flexWrap:"nowrap"}}>
+                            {doctors.data.map(doctor => <TimeCard doctor={doctor} data={data}
+                                                                  onSelect={handleSelectTime}/>)}
                         </Grid>
                     </Box>
                 </Slide>
                 <Slide in={data.step === 2} mountOnEnter unmountOnExit direction={"left"}>
-                    <Box>
-                        <Grid container spacing={2}>
-                            <TimeCard doctor={data?.doctor} data={data} onSelect={handleSelectTime}/>
-                        </Grid>
-                    </Box>
-                </Slide>
-                <Slide in={data.step === 3} mountOnEnter unmountOnExit direction={"left"}>
                     <Box
                         sx={{
                             display: data.time ? 'flex' : "none",
@@ -159,36 +128,24 @@ export default function Welcome({doctors}) {
                             alignItems: 'center',
                         }}
                     >
-                        <Typography component="h1" variant="h5">
-                            Fill The Form
-                        </Typography>
-                        <Box component="form" onSubmit={handleSubmit} sx={{mt: 3}}>
+
+                        <Box component="form" onSubmit={handleSubmit} sx={{mt: 3,mx:2,p:4, background:"rgba(255,255,255,0.7)",borderRadius:4 }}>
+                            <Typography component="h1" variant="h5">
+                                Fill The Form
+                            </Typography>
                             <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={12}>
                                     <TextField
                                         autoComplete="given-name"
-                                        name="firstName"
+                                        name="name"
                                         required
                                         fullWidth
-                                        id="firstName"
-                                        label="First Name"
+                                        id="name"
+                                        label="Name"
                                         autoFocus
-                                        error={errors?.firstName}
-                                        helperText={errors.firstName}
+                                        error={!!errors?.name}
+                                        helperText={errors.name}
                                         onChange={handleChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        id="lastName"
-                                        label="Last Name"
-                                        name="lastName"
-                                        error={errors?.lastName}
-                                        helperText={errors.lastName}
-                                        onChange={handleChange}
-                                        autoComplete="family-name"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -232,7 +189,11 @@ export default function Welcome({doctors}) {
                         </Box>
                     </Box>
                 </Slide>
-            </Container>
+            <Backdrop open={processing}>
+                <CircularProgress />
+            </Backdrop>
         </>
     );
 }
+Welcome.layout=(page)=><Layout children={page}/>
+export default Welcome;

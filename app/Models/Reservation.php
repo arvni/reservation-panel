@@ -11,8 +11,7 @@ class Reservation extends Model
     use HasFactory,HasUuids;
 
     protected $fillable = [
-        "firstName",
-        "lastName",
+        "name",
         "email",
         "mobile",
         "locked",
