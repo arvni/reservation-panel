@@ -1,4 +1,4 @@
-import {useForm} from '@inertiajs/react';
+import {useForm,Link } from '@inertiajs/react';
 import {
     Avatar,
     Backdrop,
@@ -47,7 +47,7 @@ const TimeCard = ({doctor, data, onSelect}) => {
                     flexDirection: "column",
                     alignItems: "center",
                     p: 0,
-                    color:"#fff"
+                    color: "#fff"
                 }}
             >
                 {doctor?.image && <img
@@ -130,13 +130,16 @@ function Welcome({doctors}) {
     }
     const handleBack = () => setData(previousData => ({...previousData, step: 1}));
     return (<>
-            <Slide in={data.step === 1} mountOnEnter unmountOnExit direction={"left"}>
-                <Box sx={{position: "relative", display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    <Grid container sx={{gap: "8px", flexWrap: "nowrap",px:1}}>
-                        {doctors.data.map(doctor => <TimeCard doctor={doctor} data={data} key={"dr-"+doctor.id}
+            <Slide in={data.step === 1} mountOnEnter unmountOnExit direction={"left"} >
+                <Box sx={{position: "relative", display: "flex", flexDirection: "column", alignItems: "center",minHeight:"100%"}}>
+                    <Grid container sx={{gap: "8px", flexWrap: "nowrap", px: 1}}>
+                        {doctors.data.map(doctor => <TimeCard doctor={doctor} data={data} key={"dr-" + doctor.id}
                                                               onSelect={handleSelectTime}/>)}
                     </Grid>
                     <Typography mt={2} color={"#fff"}>Please choose a time</Typography>
+                    <Box sx={{position:"absolute", bottom:"1dvh",right:"min(3dvw,15px)"}}>
+                        <Typography component={Link} fontSize={".9em"} color={"#fff"} href={route("cancel-appointment")}>Cancel Your Appointment</Typography>
+                    </Box>
                 </Box>
             </Slide>
             <Slide in={data.step === 2} mountOnEnter unmountOnExit direction={"left"}>
@@ -155,7 +158,7 @@ function Welcome({doctors}) {
                                 Fill The Form
                             </Typography>
                             <Button onClick={handleBack}>
-                               Back
+                                Back
                             </Button>
                         </Stack>
                         <Grid container spacing={2}>

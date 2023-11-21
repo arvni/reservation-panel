@@ -8,14 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    use HasFactory,HasUuids;
+    use HasFactory, HasUuids;
 
     protected $fillable = [
         "name",
         "email",
         "mobile",
-        "locked",
-        "verified",
         "verified_at"
     ];
 
@@ -31,11 +29,6 @@ class Reservation extends Model
 
     public function scopeVerified($query)
     {
-        return $query->where("verify", true);
-    }
-
-    public function VerificationRequests()
-    {
-        return $this->hasMany(VerificationRequest::class);
+        return $query->whereNotNull("verified_at");
     }
 }

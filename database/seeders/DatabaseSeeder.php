@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         $doctors = [[
             "image" => "/images/dr-saber.png",
             "title" => "Dr.Siamak Saber",
-            "subtitle" => "(MD;MSC;PHD)",
+            "subtitle" => "(MD;PHD)",
             "specialty" => "Genetic Consultant",
         ], [
             "image" => "/images/dr-abeer.png",

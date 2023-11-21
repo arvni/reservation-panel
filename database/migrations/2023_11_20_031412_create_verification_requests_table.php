@@ -14,7 +14,9 @@ return new class extends Migration
     {
         Schema::create('verification_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Reservation::class)->constrained();
+            $table->string("mobile")->unique();
+            $table->unsignedInteger("counter")->default(1);
+            $table->boolean("locked")->default(false);
             $table->timestamps();
         });
     }

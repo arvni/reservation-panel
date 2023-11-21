@@ -19,9 +19,6 @@ return new class extends Migration {
             $table->string("name");
             $table->string("mobile")->unique();
             $table->string("email")->nullable();
-            $table->boolean("verified")->default(false);
-            $table->string("code")->nullable();
-            $table->boolean("lock")->default(false);
             $table->timestamp("verified_at")->nullable();
             $table->timestamps();
         });

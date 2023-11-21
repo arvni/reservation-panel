@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class VerificationRequest extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "mobile",
+        "counter",
+        "locked"
+    ];
+
+    protected $casts = [
+        "locked" => "boolean"
+    ];
 }

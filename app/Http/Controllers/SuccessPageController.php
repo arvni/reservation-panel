@@ -16,6 +16,11 @@ class SuccessPageController extends Controller
         $time=$reservation->Time->started_at;
         $date = Carbon::parse($time)->isoFormat("MMMM D, Y");
         $time = Carbon::parse($time)->format("H:i");
-        return Inertia::render("Success", ["message" => "Dear $reservation->name, we look forward to welcoming you for your scheduled appointment at $time on $date"]);
+        return Inertia::render("Success", [
+            "message" => __("messages.appointmentSuccessfully",[
+                "name"=>$reservation->name,
+                "time"=>$time,
+                "date"=>$date
+            ])]);
     }
 }
