@@ -6,16 +6,25 @@ import {
     Button,
     Card,
     CardActions,
-    CardContent, CircularProgress, FormControl, FormHelperText,
-    Grid, IconButton, InputAdornment, InputLabel, ListItem, ListItemAvatar, ListItemText, OutlinedInput,
-    Slide, Stack,
+    CardContent,
+    CircularProgress,
+    FormControl,
+    FormHelperText,
+    Grid,
+    InputAdornment,
+    InputLabel,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    OutlinedInput,
+    Slide,
+    Stack,
     TextField,
     ToggleButton,
     ToggleButtonGroup,
     Typography
 } from "@mui/material";
 import Layout from "@/Layouts/Layout.jsx";
-import {ArrowRightAlt} from "@mui/icons-material";
 
 const TimeCard = ({doctor, data, onSelect}) => {
     const handleChange = (_, v) => {
@@ -37,7 +46,8 @@ const TimeCard = ({doctor, data, onSelect}) => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    p: 0
+                    p: 0,
+                    color:"#fff"
                 }}
             >
                 {doctor?.image && <img
@@ -48,9 +58,9 @@ const TimeCard = ({doctor, data, onSelect}) => {
                         width: "100%",
                         height: "auto",
                     }}/>}
-                <Typography>{doctor?.title}</Typography>
+                <Typography fontWeight={"bold"}>{doctor?.title}</Typography>
                 <Typography>{doctor?.subtitle}</Typography>
-                <Typography>{doctor?.specialty}</Typography>
+                <Typography fontWeight={"bold"}>{doctor?.specialty}</Typography>
             </CardContent>
             <CardActions sx={{px: "1px"}}>
                 <ToggleButtonGroup
@@ -75,7 +85,7 @@ const TimeCard = ({doctor, data, onSelect}) => {
                                                                  py: 0,
                                                                  fontWeight: "900",
                                                                  background: "#fff",
-                                                                 fontSize: "clamp(.7em,.75em,.9em)",
+                                                                 fontSize: ".7rem",
                                                                  color: "#000"
                                                              }}
                                                              value={time.id}
@@ -122,26 +132,11 @@ function Welcome({doctors}) {
     return (<>
             <Slide in={data.step === 1} mountOnEnter unmountOnExit direction={"left"}>
                 <Box sx={{position: "relative", display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    <Box sx={{
-                        maxWidth: "calc(100% - 0px)",
-                        textAlign: "center",
-                        width: "100%"
-                    }}><Typography component={"p"} fontSize={"2em"} color={"#fff"}>
-                        <Typography component={"span"} fontWeight={"bolder"} fontSize={"1.2em"}
-                                    color={"#fff"}>Free </Typography>
-                        Counseling on </Typography>
-                        <Typography component={"p"} fontSize={"2em"} color={"#fff"} marginTop={"-.5em"}>
-                            Sunday
-                            <Typography component={"span"} fontWeight={"bolder"} fontSize={"1.2em"}
-                                        color={"#fff"}> 26 </Typography>
-                            November
-                        </Typography>
-                    </Box>
-                    <Typography color={"#fff"}>Please choose a time</Typography>
-                    <Grid container sx={{gap: "clamp(0px,4px,8px)", flexWrap: "nowrap"}}>
-                        {doctors.data.map(doctor => <TimeCard doctor={doctor} data={data}
+                    <Grid container sx={{gap: "8px", flexWrap: "nowrap",px:1}}>
+                        {doctors.data.map(doctor => <TimeCard doctor={doctor} data={data} key={"dr-"+doctor.id}
                                                               onSelect={handleSelectTime}/>)}
                     </Grid>
+                    <Typography mt={2} color={"#fff"}>Please choose a time</Typography>
                 </Box>
             </Slide>
             <Slide in={data.step === 2} mountOnEnter unmountOnExit direction={"left"}>
@@ -159,9 +154,9 @@ function Welcome({doctors}) {
                             <Typography component="h1" variant="h5">
                                 Fill The Form
                             </Typography>
-                            <IconButton onClick={handleBack}>
-                                <ArrowRightAlt/>
-                            </IconButton>
+                            <Button onClick={handleBack}>
+                               Back
+                            </Button>
                         </Stack>
                         <Grid container spacing={2}>
                             {data.doctor && <Grid item xs={12}>

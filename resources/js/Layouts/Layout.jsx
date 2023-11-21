@@ -9,9 +9,9 @@ const Layout = ({children}) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "flex-start",
-            background:"url(/images/background.jpg)",
+            background:"url(/images/bg.jpg)",
             backgroundSize:"100% 100dvh",
-            paddingTop:"clamp(80px,10%,200px)",
+            paddingTop:"clamp(150px,20%,200px)",
             height:"100dvh",
             width:"100dvw",
             overflowY:"auto"
