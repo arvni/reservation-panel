@@ -13,14 +13,18 @@ class SuccessPageController extends Controller
      */
     public function __invoke(Reservation $reservation)
     {
-        $time=$reservation->Time->started_at;
+        $reservation->load(["Time", "Doctor"]);
+        $time = $reservation->time->started_at;
         $date = Carbon::parse($time)->isoFormat("MMMM D, Y");
         $time = Carbon::parse($time)->format("H:i");
         return Inertia::render("Success", [
-            "message" => __("messages.appointmentSuccessfully",[
-                "name"=>$reservation->name,
-                "time"=>$time,
-                "date"=>$date
-            ])]);
+            "message" => __("messages.appointmentSuccessfully", [
+                "name" => $reservation->name,
+                "time" => $time,
+                "date" => $date,
+                "doctor" => $reservation->doctor->title
+            ]),
+            "showMap" => true
+        ]);
     }
 }

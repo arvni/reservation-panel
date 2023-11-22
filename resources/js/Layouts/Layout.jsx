@@ -5,9 +5,10 @@ const Layout = ({children}) => {
     return <>
         <Head title="Welcome"/>
         <Container component="main" maxWidth="xs" sx={{
+            flexDirection:"column",
             paddingX:".5em",
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             alignItems: "flex-start",
             background:"url(/images/bg.jpg)",
             backgroundSize:"100% 100dvh",
